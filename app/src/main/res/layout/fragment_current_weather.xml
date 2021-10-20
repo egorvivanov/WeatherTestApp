@@ -1,11 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@color/light_blue">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_current"
+    <ImageView
+        android:id="@+id/iv_currentWeather_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/light_blue"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_temperature"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/iv_currentWeather_background"
+        app:layout_constraintStart_toStartOf="@+id/iv_currentWeather_background"
+        app:layout_constraintTop_toTopOf="@+id/iv_currentWeather_background"
+        tools:text="20 градусов" />
 
-</ScrollView>
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_temperature"
+        app:layout_constraintEnd_toEndOf="@+id/humidityLayout"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/humidityLayout"
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="13:34:05" />
+
+    <ImageView
+        android:id="@+id/iv_rain_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_temperature"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/iv_currentWeather_background"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <LinearLayout
+        android:id="@+id/humidityLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_temperature"
+        app:layout_constraintEnd_toStartOf="@+id/iv_rain_state"
+        app:layout_constraintStart_toStartOf="@+id/iv_currentWeather_background"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_humidity"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:contentDescription="@string/humidity"
+            android:paddingStart="6dp"
+            android:paddingTop="7dp"
+            android:paddingEnd="6dp"
+            android:paddingBottom="5dp"
+            app:srcCompat="@drawable/ic_humidity_icon_24" />
+
+        <TextView
+            android:id="@+id/tv_humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            tools:text="10%" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_coordinates_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_currentWeather_background"
+        app:layout_constraintEnd_toEndOf="@+id/iv_currentWeather_background"
+        app:layout_constraintHorizontal_bias="0.597"
+        app:layout_constraintStart_toEndOf="@+id/tv_temperature"
+        app:layout_constraintTop_toBottomOf="@+id/location_layout"
+        app:layout_constraintVertical_bias="0.507"
+        tools:text="[55.76x37.62]" />
+
+    <LinearLayout
+        android:id="@+id/location_layout"
+        android:layout_width="123dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="56dp"
+        android:background="@drawable/btn_background"
+        android:orientation="horizontal"
+        android:paddingStart="12dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_temperature"
+        app:layout_constraintEnd_toEndOf="@+id/iv_currentWeather_background"
+        app:layout_constraintStart_toEndOf="@+id/iv_rain_state"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_location_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/location"
+            app:srcCompat="@drawable/ic_location_icon_24" />
+
+        <TextView
+            android:id="@+id/tv_location_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textStyle="bold"
+            tools:text="Moscow" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

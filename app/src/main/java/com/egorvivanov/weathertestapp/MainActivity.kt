@@ -1,28 +1,20 @@
 package com.egorvivanov.weathertestapp
 
-import android.content.SharedPreferences
+import android.Manifest
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.FragmentActivity
+import androidx.core.app.ActivityCompat
+
 import com.egorvivanov.weathertestapp.databinding.ActivityMainBinding
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import com.egorvivanov.weathertestapp.ui.CityFragment
 
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewPagerAdapter: ViewPagerAdapter
-
 
     companion object {
-
-        val weathers = arrayOf(
-            "WeatherCurrent",
-            "WeatherDaily",
-            "WeatherWeekly"
-        )
-
-        lateinit var sharedPreferences: SharedPreferences
+        private const val LOCATION_CODE = 1122
     }
 
 
@@ -34,30 +26,59 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val viewPager = binding.viewPager
-        val tabLayout = binding.slidingTabs
 
-        viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
-        viewPager.adapter = viewPagerAdapter
-
-
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = weathers[position]
-        }.attach()
-
-
-
-//
-//
-//
-//        binding.slidingTabs.addTab(binding.slidingTabs.newTab().setText("One"))
-//        binding.slidingTabs.addTab(binding.slidingTabs.newTab().setText("Two"))
-//        binding.slidingTabs.addTab(binding.slidingTabs.newTab().setText("Three"))
-//
-//        binding.slidingTabs.tabGravity = TabLayout.GRAVITY_FILL
-
-
+        // Проверка, есть ли разрешение на использование доступа к геолокации.
+        // Если разрешения нет - запрашиваем разрешение с уникальным LOCATION_CODE,
+        // переходим на экран с отображением ошибки и сообщением пользователю.
+        // Если разрешение есть - тогда переходим на экран выбора города.
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Нет разрешения, запрашиваем
+            requestPermissions(
+                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                LOCATION_CODE
+            )
+        } else {
+            // Разрешение получено
+            startCityFragment()
+        }
     }
 
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when (requestCode) {
+            LOCATION_CODE -> {
+                if (grantResults.isNotEmpty() &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED
+                ) {
+                    // Разрешение есть, запускаем фрагмент с выбором города
+                    startCityFragment()
+                } else {
+
+                    // TODO - разрешения нет, необходимо запустить фрагмент с ошибкой
+                    // и запросить разрешение на доступ к геолокации
+
+                    // TODO - startErrorFragment()
+                }
+            }
+        }
+    }
+
+
+    private fun startCityFragment() {
+        supportFragmentManager.beginTransaction().replace(
+            R.id.fragment_container,
+            CityFragment.newInstance(),
+            CityFragment::class.java.simpleName
+        ).commit()
+    }
 }

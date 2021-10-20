@@ -1,4 +1,4 @@
-package com.egorvivanov.weathertestapp.network
+package com.egorvivanov.weathertestapp.network.interceptors
 
 import okhttp3.Interceptor
 import okhttp3.Response

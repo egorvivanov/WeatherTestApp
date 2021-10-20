@@ -3,11 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/drawable/btn_background.xml" value="0.3574074074074074" />
+        <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/drawable/erer.xml" value="0.3574074074074074" />
+        <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/drawable/fdsg.xml" value="0.3574074074074074" />
+        <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/drawable/ic_baseline_invert_colors_24.xml" value="0.3574074074074074" />
+        <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/drawable/ic_humidity_icon_24.xml" value="0.2703125" />
+        <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/drawable/ic_location_icon_24.xml" value="0.3574074074074074" />
         <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/layout/activity_main.xml" value="0.2269021739130435" />
         <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/layout/fragment_24hour_weather.xml" value="0.2269021739130435" />
         <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/layout/fragment_7days_weather.xml" value="0.2269021739130435" />
-        <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/layout/fragment_current_weather.xml" value="0.2269021739130435" />
+        <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/layout/fragment_all_weather.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/layout/fragment_city.xml" value="0.2269021739130435" />
+        <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/layout/fragment_city_container.xml" value="0.2269021739130435" />
+        <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/layout/fragment_current_weather.xml" value="0.33" />
         <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/layout/fragment_day_weather.xml" value="0.2269021739130435" />
+        <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/layout/fragment_error.xml" value="0.36096014492753625" />
         <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/layout/fragment_week_weather.xml" value="0.2269021739130435" />
         <entry key="..\:/Users/ineks/AndroidStudioProjects/WeatherTestApp/app/src/main/res/layout/rv_item_weather.xml" value="0.2269021739130435" />
       </map>

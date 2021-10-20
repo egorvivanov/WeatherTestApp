@@ -1,10 +1,13 @@
 package com.egorvivanov.weathertestapp.network
 
 import com.egorvivanov.weathertestapp.network.api.OpenWeatherApi
+import com.egorvivanov.weathertestapp.network.interceptors.AuthorizationKeyInterceptor
+import com.egorvivanov.weathertestapp.network.interceptors.ExcludeDataInterceptor
 import com.egorvivanov.weathertestapp.util.constdata.ApiConst
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 
@@ -21,9 +24,9 @@ object ApiUtils {
     private fun getOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
-            .addInterceptor(LocationInterceptor())
             .addInterceptor(ExcludeDataInterceptor())
             .addInterceptor(AuthorizationKeyInterceptor())
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
 

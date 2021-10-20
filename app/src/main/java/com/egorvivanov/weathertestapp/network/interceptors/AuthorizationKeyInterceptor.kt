@@ -1,4 +1,4 @@
-package com.egorvivanov.weathertestapp.network
+package com.egorvivanov.weathertestapp.network.interceptors
 
 import com.egorvivanov.weathertestapp.util.constdata.Config
 import okhttp3.Interceptor
