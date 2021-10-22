@@ -16,4 +16,5 @@
   - Kotlin
   - [Android Material Components](https://material.io/)
   - [OkHTTP3](https://square.github.io/okhttp/)
+  - [Retrofit2](https://square.github.io/retrofit/)
   - [Coil](https://github.com/coil-kt/coil)
