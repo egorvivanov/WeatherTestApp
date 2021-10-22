@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import androidx.fragment.app.Fragment
+
 import com.egorvivanov.weathertestapp.R
 import com.egorvivanov.weathertestapp.ViewPagerAdapter
 import com.egorvivanov.weathertestapp.databinding.FragmentAllWeatherBinding

@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+
 import com.egorvivanov.weathertestapp.WeatherRecyclerAdapter
 import com.egorvivanov.weathertestapp.databinding.FragmentWeekWeatherBinding
 import com.egorvivanov.weathertestapp.network.ApiUtils
@@ -50,11 +52,9 @@ class WeatherWeekFragment : Fragment() {
 
         repository = RepositoryImp(
             ApiUtils.getWeatherApi(),
-            latitude,
-            longitude
         )
 
-        weatherWeekViewModel.loadWeather()
+        weatherWeekViewModel.loadWeather(latitude, longitude)
 
         weatherWeekAdapter = WeatherRecyclerAdapter()
         _binding.rvWeekly.adapter = weatherWeekAdapter

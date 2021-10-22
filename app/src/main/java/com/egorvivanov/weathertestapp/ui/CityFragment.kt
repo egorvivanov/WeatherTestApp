@@ -11,8 +11,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.egorvivanov.weathertestapp.R
 
+import com.egorvivanov.weathertestapp.R
 import com.egorvivanov.weathertestapp.databinding.FragmentCityBinding
 import com.egorvivanov.weathertestapp.ui.factory.CityViewModelFactory
 import com.egorvivanov.weathertestapp.ui.viewmodel.CityViewModel
@@ -22,9 +22,6 @@ class CityFragment : Fragment() {
     private val cityViewModel: CityViewModel by viewModels {
         CityViewModelFactory(requireContext().applicationContext)
     }
-
-    private var latitude = 0.0F
-    private var longitude = 0.0F
 
     private lateinit var _binding: FragmentCityBinding
 
@@ -45,6 +42,20 @@ class CityFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        cityViewModel.getCoordinates().observe(viewLifecycleOwner, Observer {
+
+            parentFragmentManager.beginTransaction().replace(
+                R.id.fragment_container,
+                WeatherAllFragment.newInstance(it.latitude, it.longitude),
+                WeatherAllFragment::class.java.simpleName
+            ).commit()
+        })
+
+        _binding.btnCurrentCity.setOnClickListener {
+            cityViewModel.useCurrentLocationCoordinates()
+        }
+
+
         _binding.btnFindCity.setOnClickListener {
             if (_binding.etCityInputName.text.isEmpty() ||
                 _binding.etCityInputName.text == null
@@ -55,45 +66,10 @@ class CityFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             } else {
-
                 cityViewModel.saveCityLocation(
                     _binding.etCityInputName.text.toString()
                 )
-
-                cityViewModel.getLatitudeData().observe(this, Observer {
-                    latitude = it
-                })
-
-                cityViewModel.getLongitudeData().observe(this, Observer {
-                    longitude = it
-                })
-
-                parentFragmentManager.beginTransaction().replace(
-                    R.id.fragment_container,
-                    WeatherAllFragment.newInstance(latitude, longitude),
-                    WeatherAllFragment::class.java.simpleName
-                ).commit()
             }
-        }
-
-
-        _binding.btnCurrentCity.setOnClickListener {
-
-            cityViewModel.useCurrentLocationCoordinates(context)
-
-            cityViewModel.getLatitudeData().observe(this, Observer {
-                latitude = it
-            })
-
-            cityViewModel.getLongitudeData().observe(this, Observer {
-                longitude = it
-            })
-
-            parentFragmentManager.beginTransaction().replace(
-                R.id.fragment_container,
-                WeatherAllFragment.newInstance(latitude, longitude),
-                WeatherAllFragment::class.java.simpleName
-            ).commit()
         }
     }
 

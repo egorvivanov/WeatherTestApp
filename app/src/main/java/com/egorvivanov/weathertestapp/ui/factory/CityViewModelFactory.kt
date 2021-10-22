@@ -1,10 +1,9 @@
 package com.egorvivanov.weathertestapp.ui.factory
 
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.egorvivanov.weathertestapp.repository.Repository
+
 import com.egorvivanov.weathertestapp.ui.viewmodel.CityViewModel
 
 @Suppress("UNCHECKED_CAST")

@@ -3,8 +3,10 @@ package com.egorvivanov.weathertestapp.ui.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+
 import com.egorvivanov.weathertestapp.model.Weather
 import com.egorvivanov.weathertestapp.repository.Repository
+
 import kotlinx.coroutines.launch
 
 class WeatherWeekViewModel(private val repository: Repository) : ViewModel() {
@@ -14,9 +16,9 @@ class WeatherWeekViewModel(private val repository: Repository) : ViewModel() {
     val weatherWeek: MutableLiveData<List<Weather>>
         get() = weatherWeekList
 
-    fun loadWeather() {
+    fun loadWeather(latitude: Float, longitude: Float) {
         viewModelScope.launch {
-            weatherWeekList.postValue(repository.loadWeather().dailyWeather)
+            weatherWeekList.postValue(repository.loadWeather(latitude, longitude).dailyWeather)
         }
     }
 }

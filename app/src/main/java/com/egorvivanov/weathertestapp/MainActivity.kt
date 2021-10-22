@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.core.app.ActivityCompat
 
 import com.egorvivanov.weathertestapp.databinding.ActivityMainBinding
@@ -63,11 +64,10 @@ class MainActivity : AppCompatActivity() {
                     // Разрешение есть, запускаем фрагмент с выбором города
                     startCityFragment()
                 } else {
-
-                    // TODO - разрешения нет, необходимо запустить фрагмент с ошибкой
-                    // и запросить разрешение на доступ к геолокации
-
-                    // TODO - startErrorFragment()
+                    Log.d(
+                        MainActivity::class.java.simpleName,
+                        "Необходимо разрешение для продолжения работы"
+                    )
                 }
             }
         }

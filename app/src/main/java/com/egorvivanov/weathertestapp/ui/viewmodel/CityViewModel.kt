@@ -6,70 +6,86 @@ import android.content.pm.PackageManager
 
 import android.location.Geocoder
 import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 
 import com.egorvivanov.weathertestapp.SingleLiveEvent
+import com.egorvivanov.weathertestapp.model.Coordinates
 
-class CityViewModel(context: Context) : ViewModel() {
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+
+import java.util.*
+
+class CityViewModel(private val context: Context) : ViewModel() {
 
 
     // SingleLiveEvent data, с помощью которой широту и долготу
     // передаем в CityFragment
-    private val latitudeData = SingleLiveEvent<Float>()
-    fun getLatitudeData(): SingleLiveEvent<Float> {
-        return latitudeData
-    }
+    private val coordinatesData = SingleLiveEvent<Coordinates>()
 
-    private val longitudeData = SingleLiveEvent<Float>()
-    fun getLongitudeData(): SingleLiveEvent<Float> {
-        return longitudeData
-    }
+    fun getCoordinates(): LiveData<Coordinates> = coordinatesData
 
 
     private lateinit var locationManager: LocationManager
-    private val geocoder = Geocoder(context)
+    private val geocoder = Geocoder(context, Locale.US)
 
+
+    // Данный метод находит широту и долготу с помощью Geocoder
+    // по названию города, введенного в EditText
     fun saveCityLocation(cityName: String) {
 
-        val list = geocoder.getFromLocationName(cityName, 1)
+        viewModelScope.launch {
+            val deferred = async(Dispatchers.IO) {
+                geocoder.getFromLocationName(cityName, 1)
+            }
 
-        if (list.isEmpty() || !list[0].hasLatitude() || !list[0].hasLongitude()) {
-            return
-        } else {
-            latitudeData.postValue(list[0].latitude.toFloat())
-            longitudeData.postValue(list[0].longitude.toFloat())
+            val list = deferred.await()
+
+            if (list.isNotEmpty() && list[0].hasLatitude() && list[0].hasLongitude()) {
+                val coordinates = Coordinates(
+                    list[0].latitude.toFloat(),
+                    list[0].longitude.toFloat()
+                )
+                coordinatesData.postValue(coordinates)
+            }
         }
     }
 
 
-    fun useCurrentLocationCoordinates(context: Context?) {
-
-        if (context?.checkSelfPermission(
+    // Данный метод находит широту и долготу текущего местоположения устройства
+    // с помощью LocationManager
+    fun useCurrentLocationCoordinates() {
+        if (context.applicationContext.checkSelfPermission(
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             locationManager =
-                context.getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
+                context.applicationContext
+                    .getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
 
-            val providers = locationManager.getProviders(true)
-            var bestLocation: Location? = null
+            locationManager.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER,
+                0L,
+                0F,
+                locationListener
+            )
+        }
+    }
 
-            for (provider in providers) {
-                val location = locationManager.getLastKnownLocation(provider) ?: continue
-                if (bestLocation == null || location.accuracy < bestLocation.accuracy) {
-                    bestLocation = location
-
-                    latitudeData.postValue(bestLocation.latitude.toFloat())
-                    longitudeData.postValue(bestLocation.longitude.toFloat())
-
-                } else {
-                    latitudeData.postValue(location.latitude.toFloat())
-                    longitudeData.postValue(location.longitude.toFloat())
-                }
-            }
+    private val locationListener: LocationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location) {
+            val coordinates = Coordinates(
+                location.latitude.toFloat(),
+                location.longitude.toFloat()
+            )
+            coordinatesData.postValue(coordinates)
         }
     }
 }

@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+
 import com.egorvivanov.weathertestapp.WeatherRecyclerAdapter
 import com.egorvivanov.weathertestapp.databinding.FragmentDayWeatherBinding
 import com.egorvivanov.weathertestapp.network.ApiUtils
@@ -51,11 +53,9 @@ class WeatherDayFragment : Fragment() {
 
         repository = RepositoryImp(
             ApiUtils.getWeatherApi(),
-            latitude,
-            longitude
         )
 
-        weatherDayViewModel.loadWeather()
+        weatherDayViewModel.loadWeather(latitude, longitude)
 
         weatherDayAdapter = WeatherRecyclerAdapter()
         _binding.rvDaily.adapter = weatherDayAdapter

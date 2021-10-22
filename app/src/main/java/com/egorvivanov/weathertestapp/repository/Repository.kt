@@ -4,6 +4,6 @@ import com.egorvivanov.weathertestapp.model.WeatherAll
 
 interface Repository {
 
-    suspend fun loadWeather(): WeatherAll
+    suspend fun loadWeather(latitude: Float, longitude: Float): WeatherAll
 
 }

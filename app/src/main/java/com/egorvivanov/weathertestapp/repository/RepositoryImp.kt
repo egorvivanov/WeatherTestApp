@@ -2,19 +2,17 @@ package com.egorvivanov.weathertestapp.repository
 
 import com.egorvivanov.weathertestapp.model.Weather
 import com.egorvivanov.weathertestapp.model.WeatherAll
-import com.egorvivanov.weathertestapp.network.ApiUtils
 import com.egorvivanov.weathertestapp.network.api.OpenWeatherApi
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class RepositoryImp(
     private val api: OpenWeatherApi,
-    private val latitude: Float,
-    private val longitude: Float
 ) : Repository {
 
 
-    override suspend fun loadWeather(): WeatherAll {
+    override suspend fun loadWeather(latitude: Float, longitude: Float): WeatherAll {
 
         return withContext(Dispatchers.IO) {
 

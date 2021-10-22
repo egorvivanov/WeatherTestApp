@@ -2,6 +2,7 @@ package com.egorvivanov.weathertestapp.ui.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+
 import com.egorvivanov.weathertestapp.repository.Repository
 import com.egorvivanov.weathertestapp.ui.viewmodel.WeatherDayViewModel
 

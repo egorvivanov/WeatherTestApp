@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+
 import coil.load
+
 import com.egorvivanov.weathertestapp.R
 import com.egorvivanov.weathertestapp.databinding.FragmentCurrentWeatherBinding
 import com.egorvivanov.weathertestapp.network.ApiUtils
@@ -26,25 +29,6 @@ class WeatherCurrentFragment : Fragment() {
         WeatherCurrentViewModelFactory(repository)
     }
 
-
-//    fun loadLocation() {
-//
-//        val cityName = MainActivity.sharedPreferences.getString(Const.NAME, "Location")
-//
-//        val currentLatitude =
-//            MainActivity.sharedPreferences.getFloat(Const.CURRENT_LATITUDE, 53.04F)
-//        val currentLongitude =
-//            MainActivity.sharedPreferences.getFloat(Const.CURRENT_LONGITUDE, 1.056F)
-//
-//        locationNameString.postValue(cityName)
-//        locationCoordinatesString.postValue(
-//            String.format(
-//                "[%1$.2fx%2$.2f]",
-//                currentLatitude,
-//                currentLongitude
-//            )
-//        )
-//    }
 
 
     override fun onCreateView(
@@ -69,25 +53,12 @@ class WeatherCurrentFragment : Fragment() {
         val longitude = arguments?.getFloat(Const.LONGITUDE, 0.0F) ?: 0.0F
 
         repository = RepositoryImp(
-            ApiUtils.getWeatherApi(),
-            latitude,
-            longitude
+            ApiUtils.getWeatherApi()
         )
 
-        currentWeatherViewModel.loadWeather()
-
-
-        currentWeatherViewModel.locationName.observe(this.viewLifecycleOwner) {
-            _binding.tvLocationCity.text = it
-        }
-
-        currentWeatherViewModel.locationCoordinates.observe(this.viewLifecycleOwner) {
-            _binding.tvCoordinatesLocation.text = it
-        }
-
+        currentWeatherViewModel.loadWeather(latitude, longitude)
 
         currentWeatherViewModel.weather.observe(this.viewLifecycleOwner) {
-
             _binding.tvHumidity.text =
                 requireContext().getString(R.string.number_percentage, it.humidity)
 
@@ -105,8 +76,6 @@ class WeatherCurrentFragment : Fragment() {
                 time / 60 % 60,
                 time % 60
             )
-
-
         }
     }
 
